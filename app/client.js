@@ -7,10 +7,13 @@ const getHopkinsCSVs = () =>
   fetch(csvsUrl)
     .then(response => response.json())
     .then(result => {
-      return result.filter(file => {
-        const notJanuary = file.name.indexOf("01") != 0;
-        return notJanuary && file.name.match(csvFileRegex);
-      });
+      return result
+        .filter(item => {
+          const notJan = item.name.indexOf("01") != 0;
+          const notFeb = item.name.indexOf("02") != 0;
+          return notJan && notFeb && item.name.match(csvFileRegex);
+        })
+        .map(item => item.download_url)
     })
     .catch(console.alert);
 

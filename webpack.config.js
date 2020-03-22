@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: path.join(__dirname, './'),
   entry: './app/app.jsx',
   output: {
@@ -11,6 +11,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -20,5 +21,5 @@ module.exports = {
         include: path.join(__dirname, 'app'),
       },
     ],
-  },
+  }
 };
