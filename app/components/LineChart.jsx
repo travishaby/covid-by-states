@@ -1,13 +1,12 @@
 const React = require('react')
 const {LineChart, Line, Tooltip, Legend, YAxis, XAxis} = require('recharts');
-const maxBy = require('lodash.maxby')
 
 const chart = function(props) {
-  const maxByConfirmed = maxBy(props.data, datum => parseInt(datum['Confirmed']))
-  const maxConfirmedNumber = parseInt(maxByConfirmed["Confirmed"], 10)
+  // const maxByConfirmed = maxBy(props.data, datum => parseInt(datum['Confirmed']))
+  // const maxConfirmedNumber = parseInt(maxByConfirmed["Confirmed"], 10)
   return (
     <LineChart width={1000} height={600} data={props.data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-      <YAxis type="number" dataKey="Confirmed" yAxisId="cases" domain={[0, maxConfirmedNumber]}/>
+      {/* <YAxis type="number" dataKey="Confirmed" yAxisId="cases" domain={[0, maxConfirmedNumber]}/> */}
       <XAxis type="category" dataKey="date" />
       <Tooltip />
       <Legend wrapperStyle={{position: 'relative'}}/>

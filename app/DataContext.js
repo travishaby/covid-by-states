@@ -7,7 +7,7 @@ const DataContext = React.createContext({
 const DataContextProvider = ({children}) => {
   const [state, dispatch] = React.useReducer(
     DataReducer,
-    { statesByDate: {} } // default
+    { data: {} } // default
   );
 
   const contextValue = React.useMemo(() => {

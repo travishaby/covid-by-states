@@ -117,4 +117,4 @@ const stateToAbbreviation = {
   "Wyoming": "WY"
 }
 
-module.exports = { states, topStates, stateToAbbreviation }
+module.exports = { states, stateToAbbreviation }

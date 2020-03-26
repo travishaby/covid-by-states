@@ -1,15 +1,15 @@
-const SET_STATES_BY_DATE = 'SET_STATES_BY_DATE'
+const SET_DATA = 'SET_DATA'
 
 const DataReducer = (state, action) => {
   switch (action.type) {
-    case SET_STATES_BY_DATE:
+    case SET_DATA:
       return {
         ...state,
-        statesByDate: { ...state.statesByDate, ...action.payload },
+        data: { ...state.data, ...action.payload },
       };
     default:
       return state;
   }
 };
 
-module.exports = { DataReducer, SET_STATES_BY_DATE }
+module.exports = { DataReducer, SET_DATA }

@@ -5,4 +5,4 @@ const getData = () =>
     .then(response => response.json())
     .catch(console.alert);
 
-module.exports = getHopkinsCSVs;
+module.exports = getData;

@@ -3,15 +3,17 @@ const React = require("react");
 const LineChart = require('./LineChart')
 const Loading = require('./Loading')
 const {DataContext} = require('../DataContext')
-const {SET_STATES_BY_DATE} = require('../DataReducer')
+const {SET_DATA} = require('../DataReducer')
 const getData = require("../client");
-const {states, topStates} = require('../utils')
+const {states} = require('../utils')
 
 
 const Main = function() {
-  const [csvLocations, setCsvLocations] = React.useState([])
-  const [stateName, setStateName] = React.useState(topStates[Math.floor(Math.random() * topStates.length)]) // default to random from top states
+  const [stateName, setStateName] = React.useState('Colorado') // default to random from top states
   const { state, dispatch } = React.useContext(DataContext)
+  const data = getData().then(() => {
+    dispatch({ type: SET_DATA, payload: { data } })
+  })
 
   const handleSelect = event => setStateName(event.target.value)
   return (
