@@ -26,7 +26,7 @@ const Main = function() {
     // set url
     const newSearch = new URLSearchParams(window.location.search)
     newSearch.set(STATE, stateName)
-    window.location.search = newSearch.toString()
+    window.history.replaceState({}, '', `?${newSearch.toString()}`)
     // set state
     return setStateName(stateName)
   }
