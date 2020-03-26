@@ -5,17 +5,23 @@ const Loading = require('./Loading')
 const {DataContext} = require('../DataContext')
 const {SET_DATA} = require('../DataReducer')
 const getData = require("../client");
-const {states} = require('../utils')
-
+const {states, stateToAbbreviation} = require('../utils')
 
 const Main = function() {
   const [stateName, setStateName] = React.useState('Colorado') // default to random from top states
   const { state, dispatch } = React.useContext(DataContext)
-  const data = getData().then(() => {
-    dispatch({ type: SET_DATA, payload: { data } })
-  })
+
+  // when component mounts
+  React.useEffect(() => {
+    getData().then(data => {
+      dispatch({ type: SET_DATA, payload: data })
+    })
+  }, []);
 
   const handleSelect = event => setStateName(event.target.value)
+
+  const currentStateKey = `${stateToAbbreviation[stateName]}, USA`
+  const currentStateData = state.data[currentStateKey]
   return (
     <div className="container">
       <div className="row">
@@ -43,14 +49,23 @@ const Main = function() {
           Cases in <b>{stateName}</b>
         </h2>
 
-        {fullyLoaded ? (
-          <LineChart data={data} stateName={stateName} />
+        { currentStateData ? (
+          <LineChart data={buildChartData(currentStateData.dates)} stateName={stateName} />
         ) : (
           <Loading />
         )}
       </div>
     </div>
   );
+}
+
+const defaults = { cases: 0, active: 0, recovered: 0, deaths: 0, growthFactor: 0 }
+
+function buildChartData(data) {
+  return Object.entries(data).reduce((agg, [date, dayData]) => {
+    agg.push({ ...defaults, ...dayData, date })
+    return agg
+  }, [])
 }
 
 module.exports = Main;
