@@ -72,8 +72,10 @@ const Main = function() {
 
 const defaults = { cases: 0, active: 0, recovered: 0, deaths: 0, growthFactor: 0 }
 
+const lowerDateLimit = new Date('2020-03-01')
 function buildChartData(data) {
   return Object.entries(data).reduce((agg, [date, dayData]) => {
+    if (new Date(date) < lowerDateLimit) return agg
     agg.push({ ...defaults, ...dayData, date })
     return agg
   }, [])
