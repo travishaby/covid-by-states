@@ -7,8 +7,12 @@ const {SET_DATA} = require('../DataReducer')
 const getData = require("../client");
 const {states, stateToAbbreviation} = require('../utils')
 
+const STATE = 'state'
+
 const Main = function() {
-  const [stateName, setStateName] = React.useState('Colorado') // default to random from top states
+  const params = (new URL(document.location)).searchParams;
+  const nameFromUrl = params.get(STATE);
+  const [stateName, setStateName] = React.useState(nameFromUrl || 'Colorado') // default to random from top states
   const { state, dispatch } = React.useContext(DataContext)
 
   // when component mounts
@@ -18,7 +22,14 @@ const Main = function() {
     })
   }, []);
 
-  const handleSelect = event => setStateName(event.target.value)
+  const handleSelect = ({target: {value: stateName}}) => {
+    // set url
+    const newSearch = new URLSearchParams(window.location.search)
+    newSearch.set(STATE, stateName)
+    window.location.search = newSearch.toString()
+    // set state
+    return setStateName(stateName)
+  }
 
   const currentStateKey = `${stateToAbbreviation[stateName]}, USA`
   const currentStateData = state.data[currentStateKey]
